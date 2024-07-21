@@ -27,10 +27,6 @@ public class ProductController {
         model.addAttribute("product", productService.getProductById(id));
         return "product-info";
     }
-    @GetMapping("/")
-    public String getFirst(Model model){
-        return null;
-    }
 
     @PostMapping("/product/create")
     public String createProduct(Product product) {
