@@ -40,6 +40,10 @@ public class Product {
     private void init() {
         dateOfCreated = LocalDateTime.now();
     }
+    @PrePersist
+    private void init2() {
+        dateOfCreated = LocalDateTime.now();
+    }
 
 
     public void addImageToProduct(Image image) {
