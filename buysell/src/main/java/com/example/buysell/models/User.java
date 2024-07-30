@@ -3,6 +3,7 @@ package com.example.buysell.models;
 import com.example.buysell.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,43 +11,48 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-@Table(name="user")
+@Table(name = "users")
 @Data
+@NoArgsConstructor
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "id")
+    @Column(name = "id")
     private Long id;
-    @Column(name= "email", unique = true)
+    @Column(name = "email", unique = true)
     private String email;
-    @Column(name= "phone_number")
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column(name= "name")
+    @Column(name = "name")
     private String name;
-    @Column(name= "active")
+    @Column(name = "active")
     private boolean active;
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name="image_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_id")
     private Image avatar;
-    @Column(name="password",length = 1000)
+    @Column(name = "password", length = 1000)
     private String password;
-    @ElementCollection(targetClass = Role.class,fetch = FetchType.EAGER)
-    @CollectionTable(name="user_role",
-    joinColumns = @JoinColumn(name = "user_id"))
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles=new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,
-    mappedBy="user")
+    private Set<Role> roles = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Product> products = new ArrayList<>();
+    private LocalDateTime dateOfCreated;
 
-    private LocalDateTime dateOfCreate;
+
     @PrePersist
-    private void init(){
-        dateOfCreate=LocalDateTime.now();
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
     }
 
-    //security
+    // security
+
+    public boolean isAdmin() {
+        return roles.contains(Role.ROLE_ADMIN);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
