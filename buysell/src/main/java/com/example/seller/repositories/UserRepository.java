@@ -1,6 +1,6 @@
-package com.example.buysell.repositories;
+package com.example.seller.repositories;
 
-import com.example.buysell.models.User;
+import com.example.seller.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User,Long> {

@@ -1,14 +1,15 @@
-package com.example.buysell.controllers;
+package com.example.seller.controllers;
 
-import com.example.buysell.models.User;
-import com.example.buysell.models.enums.Role;
-import com.example.buysell.services.UserService;
+import com.example.seller.models.User;
+import com.example.seller.models.enums.Role;
+import com.example.seller.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -18,8 +19,9 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping("/admin")
-    public String admin(Model model) {
+    public String admin(Model model, Principal principal) {
         model.addAttribute("users", userService.list());
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "admin";
     }
 
@@ -30,8 +32,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin/user/edit/{user}")
-    public String userEdit(@PathVariable("user") User user, Model model) {
+    public String userEdit(@PathVariable("user") User user, Model model,Principal principal) {
         model.addAttribute("user", user);
+        model.addAttribute("user", userService.getUserByPrincipal(principal));
         model.addAttribute("roles", Role.values());
         return "user-edit";
     }

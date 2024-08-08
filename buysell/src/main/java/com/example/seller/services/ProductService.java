@@ -1,10 +1,10 @@
-package com.example.buysell.services;
+package com.example.seller.services;
 
-import com.example.buysell.models.Image;
-import com.example.buysell.models.Product;
-import com.example.buysell.models.User;
-import com.example.buysell.repositories.ProductRepository;
-import com.example.buysell.repositories.UserRepository;
+import com.example.seller.models.Image;
+import com.example.seller.models.Product;
+import com.example.seller.models.User;
+import com.example.seller.repositories.ProductRepository;
+import com.example.seller.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,9 +50,8 @@ public class ProductService {
     }
 
     public User getUserByPrincipal(Principal principal) {
-        if(principal==null){
+        if (principal == null)
             return new User();
-        }
         return userRepository.findByEmail(principal.getName());
     }
 
@@ -66,11 +65,21 @@ public class ProductService {
         return image;
     }
 
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
-    }
+    public void deleteProduct(User user, Long id) {
+        Product product = productRepository.findById(id)
+                .orElse(null);
+        if (product != null) {
+            if (product.getUser().getId().equals(user.getId())) {
+                productRepository.delete(product);
+                log.info("Product with id = {} was deleted", id);
+            } else {
+                log.error("User: {} haven't this product with id = {}", user.getEmail(), id);
+            }
+        } else {
+            log.error("Product with id = {} is not found", id);
+        }    }
 
     public Product getProductById(Long id) {
-       return productRepository.findById(id).orElse(null);
+        return productRepository.findById(id).orElse(null);
     }
 }
