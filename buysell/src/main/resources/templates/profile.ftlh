@@ -4,7 +4,7 @@
     <hr>
     <br>
     <div style="text-align: center">
-        <img src="/static/images/avatar.png"
+        <img src="static/images/avatar.png"
              style="border:2px solid black; border-radius: 20px" height="120">
         <br>
         <br>

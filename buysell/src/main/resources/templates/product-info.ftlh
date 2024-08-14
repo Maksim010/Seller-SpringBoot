@@ -44,7 +44,7 @@
     <hr>
     <p style="text-align: center">
         <a href="/user/${authorProduct.id}">
-            <img src="/resources/images/avatar.png" alt="mdo" width="32" height="32" class="rounded-circle"> ${authorProduct.name}
+            <img src="/static/images/avatar.png" alt="mdo" width="32" height="32" class="rounded-circle"> ${authorProduct.name}
         </a>
     </p>
 
