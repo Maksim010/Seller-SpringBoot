@@ -26,12 +26,33 @@
             <div class="form-group">
                 <label for="searchCity">Город</label>
                 <select id="searchCity" required name="city" class="form-control">
-                    <option value="">Город не выбран</option>
-                    <option value="Витебск">Витебск</option>
-                    <option value="Москва">Москва</option>
-                    <option value="Санкт-Питербург">Санкт-Питербург</option>
-                    <option value="Минск">Минск</option>
-
+                     <option value="">Город не выбран</option>
+                        <option value="Москва">Москва</option>
+                        <option value="Санкт-Петербург">Санкт-Петербург</option>
+                        <option value="Новосибирск">Новосибирск</option>
+                        <option value="Екатеринбург">Екатеринбург</option>
+                        <option value="Нижний Новгород">Нижний Новгород</option>
+                        <option value="Казань">Казань</option>
+                        <option value="Челябинск">Челябинск</option>
+                        <option value="Омск">Омск</option>
+                        <option value="Самара">Самара</option>
+                        <option value="Ростов-на-Дону">Ростов-на-Дону</option>
+                        <option value="Уфа">Уфа</option>
+                        <option value="Красноярск">Красноярск</option>
+                        <option value="Воронеж">Воронеж</option>
+                        <option value="Пермь">Пермь</option>
+                        <option value="Волгоград">Волгоград</option>
+                        <option value="Краснодар">Краснодар</option>
+                        <option value="Тюмень">Тюмень</option>
+                        <option value="Ижевск">Ижевск</option>
+                        <option value="Барнаул">Барнаул</option>
+                        <option value="Ульяновск">Ульяновск</option>
+                        <option value="Иркутск">Иркутск</option>
+                        <option value="Крым">Симферополь</option>
+                        <option value="Хабаровск">Хабаровск</option>
+                        <option value="Ярославль">Ярославль</option>
+                        <option value="Тула">Тула</option>
+                        <option value="Саратов">Саратов</option>
                 </select>
             </div>
             <div class="form-group">
@@ -65,13 +86,19 @@
         <#list products as product>
             <a href="/product/${product.id}" class="product-link">
                 <div class="card text-white bg-dark my-3 product">
-                    <div class="card-top">
+                    <div class="card-top" >
                         <form action="/product/delete/${product.id}" method="post">
                             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                             <button type="submit" class="btn btn-danger m-3">
                                 Удалить
                             </button>
                         </form>
+                        <form action="/product/edit/${product.id}" method="get">
+                                                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                                                    <button type="submit" class="btn btn-info m-3">
+                                                        Изменить
+                                                    </button>
+                                                </form>
                     </div>
                     <img src="/images/${product.previewImageId}"
                          class="card-img-top">

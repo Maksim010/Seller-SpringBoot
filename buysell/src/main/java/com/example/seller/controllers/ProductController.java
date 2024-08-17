@@ -49,6 +49,20 @@ public class ProductController {
         productService.deleteProduct(productService.getUserByPrincipal(principal), id);
         return "redirect:/my/products";
     }
+    @GetMapping("/product/edit/{id}")
+    public String editProduct(@PathVariable Long id,Model model,Principal principal){
+        Product product=productService.getProductById(id);
+        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("product", product);
+        model.addAttribute("images", product.getImages());
+        model.addAttribute("authorProduct", product.getUser());
+        return "product-edit";
+    }
+    @PostMapping("/product/edit/{id}")
+    public String updateProduct(@PathVariable Long id, Product product) {
+        productService.editProduct(product, id);
+        return "redirect:/my/products";
+    }
     @GetMapping("/my/products")
     public String userProducts(Principal principal, Model model) {
         User user = productService.getUserByPrincipal(principal);
